@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Little Birthday Surprise</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  font-family: sans-serif;
+  text-align: center;
+  color: white;
+  background: linear-gradient(145deg,#180c32,#642b59,#d46b91);
+  overflow-x: hidden;
+}
+.card {
+  width: 100%;
+  max-width: 430px;
+  padding: 30px 22px;
+  border: 1px solid #ffffff55;
+  border-radius: 25px;
+  background: #ffffff15;
+  box-shadow: 0 15px 50px #10051b55;
+}
+h1 { font-size: 32px; }
+p { line-height: 1.9; }
+button {
+  padding: 14px 23px;
+  border: 0;
+  border-radius: 30px;
+  background: #ffe0ec;
+  color: #542344;
+  font-size: 16px;
+  cursor: pointer;
+}
+#surprise { display: none; }
+.heart {
+  position: fixed;
+  bottom: -30px;
+  animation: rise 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes rise {
+  to { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<main class="card">
+  <div style="font-size:48px">🎁</div>
+  <p>A little surprise, made for your special day ✨</p>
+  <button id="open" onclick="reveal()">
+    Open your surprise 💌
+  </button>
+
+  <section id="surprise">
+    <h1>ಹುಟ್ಟುಹಬ್ಬದ ಶುಭಾಶಯಗಳು ❤️</h1>
+    <div style="font-size:58px">🎂</div>
+    <h2 id="herName">ನಿನಗಾಗಿ ಒಂದು ಪುಟ್ಟ ಸಂದೇಶ</h2>
+    <p>
+      ನಿನ್ನ ಜೀವನದಲ್ಲಿ ಯಾವತ್ತೂ ಖುಷಿ ತುಂಬಿರಲಿ.
+      ನೀನು ಕಾಣುವ ಕನಸುಗಳೆಲ್ಲ ನನಸಾಗಲಿ.
+      ನಿನ್ನ ಮುಖದ ಮೇಲಿನ ನಗು ಹೀಗೆಯೇ ಇರಲಿ.
+      ಈ ದಿನ ನಿನಗೆ ಸುಂದರ ನೆನಪಾಗಲಿ. ❤️
+    </p>
+    <p>ಇವತ್ತು ಮಾತ್ರವಲ್ಲ, ಪ್ರತಿದಿನವೂ ಖುಷಿಯಾಗಿರು ✨</p>
+    <button onclick="location.reload()">ಮತ್ತೊಮ್ಮೆ ನೋಡು 💗</button>
+  </section>
+</main>
+<script>
+function reveal() {
+  document.getElementById("surprise").style.display = "block";
+  document.getElementById("open").style.display = "none";
+  for (let i = 0; i < 24; i++) {
+    const heart = document.createElement("span");
+    heart.className = "heart";
+    heart.textContent = ["❤️","💗","✨","💕"][i % 4];
+    heart.style.left = Math.random() * 95 + "vw";
+    heart.style.animationDelay = Math.random() * 4 + "s";
+    document.body.appendChild(heart);
+  }
+}
+</script>
+</body>
+</html>
