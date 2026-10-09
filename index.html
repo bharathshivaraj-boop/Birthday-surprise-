@@ -3,88 +3,576 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Little Birthday Surprise</title>
+<meta name="theme-color" content="#77358d">
+<title>ಒಂದು ಪುಟ್ಟ ಸರ್ಪ್ರೈಸ್ 💗</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-  font-family: sans-serif;
-  text-align: center;
-  color: white;
-  background: linear-gradient(145deg,#180c32,#642b59,#d46b91);
-  overflow-x: hidden;
-}
-.card {
-  width: 100%;
-  max-width: 430px;
-  padding: 30px 22px;
-  border: 1px solid #ffffff55;
-  border-radius: 25px;
-  background: #ffffff15;
-  box-shadow: 0 15px 50px #10051b55;
-}
-h1 { font-size: 32px; }
-p { line-height: 1.9; }
-button {
-  padding: 14px 23px;
-  border: 0;
-  border-radius: 30px;
-  background: #ffe0ec;
-  color: #542344;
-  font-size: 16px;
-  cursor: pointer;
-}
-#surprise { display: none; }
-.heart {
-  position: fixed;
-  bottom: -30px;
-  animation: rise 6s linear infinite;
-  pointer-events: none;
-}
-@keyframes rise {
-  to { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
-}
+  :root {
+    --pink: #ff7eb4;
+    --hot: #df4f99;
+    --purple: #7b3c98;
+    --dark: #49264f;
+    --cream: #fff8fc;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--dark);
+    font-family: system-ui, "Noto Sans Kannada", "Tunga", sans-serif;
+    background:
+      radial-gradient(ellipse at 10% 5%, #ffd8e9 0, transparent 35%),
+      radial-gradient(ellipse at 95% 35%, #e5ccff 0, transparent 34%),
+      linear-gradient(145deg, #fff1f7, #f4e8ff 55%, #ffe4f0);
+  }
+
+  button { font: inherit; }
+
+  .hearts {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .heart {
+    position: absolute;
+    bottom: -45px;
+    opacity: 0;
+    animation: rise linear forwards;
+  }
+
+  @keyframes rise {
+    0% { transform: translateY(0) rotate(0) scale(.7); opacity: 0; }
+    15% { opacity: .65; }
+    85% { opacity: .5; }
+    100% { transform: translateY(-115vh) rotate(28deg) scale(1.2); opacity: 0; }
+  }
+
+  main {
+    width: min(100% - 26px, 600px);
+    margin: auto;
+    padding: 25px 0 42px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .topline {
+    text-align: center;
+    color: #86528f;
+    font-size: .82rem;
+    letter-spacing: .05em;
+    margin: 5px 0 15px;
+  }
+
+  .hero, .panel {
+    text-align: center;
+    background: #ffffffbd;
+    border: 1px solid #ffffff;
+    box-shadow: 0 15px 40px #71386b17;
+    backdrop-filter: blur(8px);
+    border-radius: 27px;
+  }
+
+  .hero { padding: 28px 19px 30px; }
+  .panel { margin-top: 18px; padding: 23px 17px; }
+
+  .eyebrow {
+    color: #9d558f;
+    font-size: .8rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    color: #983d83;
+    font-size: clamp(1.75rem, 7vw, 2.6rem);
+    line-height: 1.5;
+    margin: 8px 0;
+  }
+
+  h2 {
+    color: #8c3d8a;
+    font-size: 1.35rem;
+    line-height: 1.65;
+    margin: 0 0 8px;
+  }
+
+  p { line-height: 1.9; }
+
+  .intro {
+    color: #79577e;
+    max-width: 440px;
+    margin: auto;
+    font-size: .98rem;
+  }
+
+  .hint {
+    color: #906e92;
+    font-size: .88rem;
+    line-height: 1.8;
+  }
+
+  .btn {
+    border: 0;
+    border-radius: 999px;
+    padding: 13px 22px;
+    margin: 7px 4px;
+    color: white;
+    font-weight: 650;
+    background: linear-gradient(110deg, var(--hot), var(--purple));
+    box-shadow: 0 8px 20px #a34a9630;
+    cursor: pointer;
+    transition: transform .2s, filter .2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:active { transform: scale(.97); }
+  .btn:focus-visible { outline: 3px solid #9a60b8; outline-offset: 4px; }
+  .btn.secondary {
+    background: #f4e5f5;
+    color: #783b83;
+    box-shadow: none;
+  }
+
+  .envelope-wrap {
+    width: min(100%, 310px);
+    margin: 24px auto 12px;
+    perspective: 900px;
+  }
+
+  .envelope {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 188px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .env-back {
+    position: absolute;
+    inset: 10px 0 0;
+    border-radius: 12px;
+    background: #f7a9cd;
+    box-shadow: 0 13px 25px #8b3c7320;
+  }
+
+  .env-paper {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 23px;
+    height: 130px;
+    padding: 17px 10px;
+    background: #fffafd;
+    border-radius: 9px;
+    color: #994d8b;
+    font-size: 1rem;
+    line-height: 1.7;
+    transition: transform .8s ease, top .8s ease;
+  }
+
+  .env-front {
+    position: absolute;
+    inset: 48px 0 0;
+    background: #ffbad9;
+    border-radius: 0 0 12px 12px;
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .env-flap {
+    position: absolute;
+    inset: 10px 0 auto;
+    height: 98px;
+    background: #ed83b5;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform .7s ease;
+    z-index: 3;
+  }
+
+  .seal {
+    position: absolute;
+    left: 50%;
+    top: 99px;
+    transform: translateX(-50%);
+    z-index: 4;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #d94c91;
+    color: white;
+    box-shadow: 0 3px 9px #8c286455;
+    transition: opacity .25s;
+  }
+
+  .envelope.open .env-flap { transform: rotateX(180deg); z-index: 0; }
+  .envelope.open .env-paper { top: -4px; transform: translateY(-48px); }
+  .envelope.open .seal { opacity: 0; }
+
+  .hidden { display: none !important; }
+
+  .message-card {
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 15px;
+    margin: 18px 0;
+    border-radius: 21px;
+    background: linear-gradient(140deg, #fff0f7, #f4eaff);
+    border: 1px solid #fff;
+  }
+
+  .message-number { color: #b16b9f; font-size: .82rem; }
+  .message-kn { font-size: 1.15rem; font-weight: 650; line-height: 1.9; }
+  .message-en { font-size: .94rem; color: #805e84; line-height: 1.8; margin-top: 8px; }
+
+  .dots { display: flex; justify-content: center; gap: 7px; margin: 12px; }
+  .dot { width: 7px; height: 7px; background: #e4c6e5; border-radius: 50%; }
+  .dot.active { background: #cf579e; transform: scale(1.35); }
+
+  .cake-area { padding: 10px 0 2px; }
+  .cake {
+    position: relative;
+    width: 190px;
+    height: 150px;
+    margin: 15px auto 6px;
+  }
+
+  .plate {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    width: 190px;
+    height: 17px;
+    border-radius: 50%;
+    background: #e8c8eb;
+    box-shadow: 0 5px 8px #7a3b6b18;
+  }
+
+  .cake-base {
+    position: absolute;
+    bottom: 18px;
+    left: 22px;
+    width: 146px;
+    height: 69px;
+    border-radius: 10px 10px 13px 13px;
+    background: linear-gradient(90deg, #e99ac7, #ffd0e4, #e99ac7);
+    box-shadow: inset 0 -9px #d982b7;
+  }
+
+  .icing {
+    position: absolute;
+    bottom: 71px;
+    left: 22px;
+    width: 146px;
+    height: 26px;
+    border-radius: 12px 12px 8px 8px;
+    background: #fff4fb;
+  }
+
+  .icing::after {
+    content: " ";
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    width: 12px;
+    height: 19px;
+    background: #fff4fb;
+    border-radius: 0 0 9px 9px;
+    box-shadow: 34px 2px #fff4fb, 68px -1px #fff4fb, 102px 1px #fff4fb;
+  }
+
+  .candle {
+    position: absolute;
+    bottom: 95px;
+    left: 87px;
+    width: 16px;
+    height: 37px;
+    border-radius: 4px 4px 2px 2px;
+    background: repeating-linear-gradient(135deg, #fff 0 5px, #ff83b5 5px 10px);
+  }
+
+  .flame {
+    position: absolute;
+    left: 88px;
+    bottom: 131px;
+    width: 14px;
+    height: 21px;
+    border-radius: 50% 50% 45% 45%;
+    background: #ffb92e;
+    box-shadow: 0 0 20px #ffb32e, 0 0 35px #ff8fbb;
+    transform-origin: bottom center;
+    animation: flicker .7s infinite alternate;
+  }
+
+  @keyframes flicker {
+    from { transform: rotate(-5deg) scale(.95); }
+    to { transform: rotate(5deg) scale(1.06); }
+  }
+
+  .cake.blown .flame { display: none; }
+
+  .final-note {
+    background: linear-gradient(145deg, #fff0f8, #eee0ff);
+    border: 1px solid white;
+    border-radius: 23px;
+    padding: 22px 17px;
+    margin-top: 17px;
+  }
+
+  .final-note h2 { font-size: 1.55rem; }
+  .signature { color: #a14a91; margin-top: 17px; font-weight: 650; }
+  .footer { text-align: center; color: #99779c; font-size: .8rem; padding: 22px 10px 0; }
+  .celebrate { animation: pop .6s ease both; }
+
+  @keyframes pop {
+    0% { transform: scale(.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: .01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
-<main class="card">
-  <div style="font-size:48px">🎁</div>
-  <p>A little surprise, made for your special day ✨</p>
-  <button id="open" onclick="reveal()">
-    Open your surprise 💌
-  </button>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
 
-  <section id="surprise">
-    <h1>ಹುಟ್ಟುಹಬ್ಬದ ಶುಭಾಶಯಗಳು ❤️</h1>
-    <div style="font-size:58px">🎂</div>
-    <h2 id="herName">ನಿನಗಾಗಿ ಒಂದು ಪುಟ್ಟ ಸಂದೇಶ</h2>
-    <p>
-      ನಿನ್ನ ಜೀವನದಲ್ಲಿ ಯಾವತ್ತೂ ಖುಷಿ ತುಂಬಿರಲಿ.
-      ನೀನು ಕಾಣುವ ಕನಸುಗಳೆಲ್ಲ ನನಸಾಗಲಿ.
-      ನಿನ್ನ ಮುಖದ ಮೇಲಿನ ನಗು ಹೀಗೆಯೇ ಇರಲಿ.
-      ಈ ದಿನ ನಿನಗೆ ಸುಂದರ ನೆನಪಾಗಲಿ. ❤️
+<main>
+  <p class="topline">♡ ಒಂದು ಪುಟ್ಟ ಸರ್ಪ್ರೈಸ್ · A little surprise ♡</p>
+
+  <header class="hero">
+    <div class="eyebrow">Made with a little extra love</div>
+    <h1>ನಿನಗಾಗಿ ಒಂದು ಪುಟ್ಟ ಸರ್ಪ್ರೈಸ್ 💗</h1>
+    <p class="intro">
+      ಕೆಲವರು ನಮ್ಮ ಜೀವನಕ್ಕೆ ಬಂದು, ಸಾಮಾನ್ಯ ದಿನಗಳನ್ನೂ ವಿಶೇಷವಾಗಿಸುತ್ತಾರೆ.
+      <br>
+      Some people make even ordinary days feel special.
     </p>
-    <p>ಇವತ್ತು ಮಾತ್ರವಲ್ಲ, ಪ್ರತಿದಿನವೂ ಖುಷಿಯಾಗಿರು ✨</p>
-    <button onclick="location.reload()">ಮತ್ತೊಮ್ಮೆ ನೋಡು 💗</button>
+    <p style="font-size:1.65rem;margin:17px 0 0">🎀 ✨ 🌷</p>
+  </header>
+
+  <section class="panel" id="letterSection">
+    <h2>ನಿನ್ನಿಗಾಗಿ ಒಂದು ಪತ್ರ 💌</h2>
+    <p class="hint">ಕೆಳಗಿನ ಲಕೋಟೆಯನ್ನು ಒತ್ತಿ ತೆರೆ. Open the envelope to begin.</p>
+
+    <div class="envelope-wrap">
+      <button class="envelope" id="envelope" aria-label="Open the birthday envelope">
+        <span class="env-back"></span>
+        <span class="env-paper">ನಿನ್ನ ದಿನಕ್ಕೆ ಒಂದು ಪುಟ್ಟ ಪತ್ರ…<br>A little note, just for you 💕</span>
+        <span class="env-front"></span>
+        <span class="env-flap"></span>
+        <span class="seal">♥</span>
+      </button>
+    </div>
+
+    <button class="btn" id="openBtn">ಲಕೋಟೆ ತೆರೆ · Open letter</button>
   </section>
+
+  <section class="panel hidden" id="messagesSection">
+    <div class="eyebrow">A few words from the heart</div>
+    <h2>ಮನಸ್ಸಿನ ಮಾತುಗಳು 💖</h2>
+    <div class="message-card celebrate" id="messageCard" aria-live="polite">
+      <div class="message-number" id="messageNumber"></div>
+      <div class="message-kn" id="messageKn"></div>
+      <div class="message-en" id="messageEn"></div>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <button class="btn" id="nextBtn">ಮುಂದಿನ ಮಾತು 💗</button>
+  </section>
+
+  <section class="panel hidden" id="cakeSection">
+    <div class="eyebrow">Make a little wish</div>
+    <h2>ಇದು ನಿನ್ನ ಪುಟ್ಟ ಕೇಕ್ 🎂</h2>
+    <p class="hint">ಒಂದು ಆಸೆ ಮಾಡಿಕೋ… ನಂತರ ಮೇಣದಬತ್ತಿಯನ್ನು ಆರಿಸು!<br>Make a wish, then tap the button below.</p>
+    <div class="cake-area">
+      <div class="cake" id="cake">
+        <div class="plate"></div>
+        <div class="cake-base"></div>
+        <div class="icing"></div>
+        <div class="candle"></div>
+        <div class="flame" id="flame"></div>
+      </div>
+    </div>
+    <p id="wishText" class="hint">ನಿನ್ನ ಎಲ್ಲಾ ಒಳ್ಳೆಯ ಆಸೆಗಳು ನನಸಾಗಲಿ ✨<br>May your sweetest wishes come true.</p>
+    <button class="btn" id="blowBtn">ಮೇಣದಬತ್ತಿ ಆರಿಸು ✨</button>
+  </section>
+
+  <section class="panel hidden" id="finalSection">
+    <div class="eyebrow">One last little thing…</div>
+    <div class="final-note celebrate">
+      <div style="font-size:2.2rem">💗 🌸 💗</div>
+      <h2>ಹುಟ್ಟುಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು!</h2>
+      <p>
+        ನಿನ್ನ ಜೀವನ ನಗು, ನೆಮ್ಮದಿ, ಪ್ರೀತಿ ಮತ್ತು ಸುಂದರ ನೆನಪುಗಳಿಂದ ತುಂಬಿರಲಿ.
+        ನೀನು ಬಯಸುವ ಒಳ್ಳೆಯದೆಲ್ಲ ನಿನ್ನ ಬದುಕಿನಲ್ಲಿ ಅರಳಲಿ.
+      </p>
+      <p class="message-en">
+        Happy Birthday! I hope this new year of your life brings you
+        peace, genuine happiness, lovely surprises and countless reasons to smile.
+        Never forget that you deserve beautiful things.
+      </p>
+      <p>
+        ಇವತ್ತು ಮಾತ್ರವಲ್ಲ, ನಿನ್ನ ಪ್ರತಿಯೊಂದು ದಿನವೂ ಸುಂದರವಾಗಿರಲಿ. 🌷
+        <br>
+        Not just today — may every day bring you something beautiful.
+      </p>
+      <div class="signature">ನಿನ್ನ ದಿನ ತುಂಬಾ ವಿಶೇಷವಾಗಿರಲಿ 💕<br>Have the loveliest birthday!</div>
+    </div>
+    <p class="hint">ಈ ಪುಟ್ಟ ಸರ್ಪ್ರೈಸ್ ನಿನ್ನ ಮುಖದಲ್ಲಿ ಒಂದು ನಗು ತರಲಿ. 😊<br>Hope this little surprise made you smile.</p>
+    <button class="btn" id="againBtn">ಮತ್ತೆ ನೋಡೋಣ ↻ · Replay</button>
+  </section>
+
+  <footer class="footer">
+    Made with ♡, just for this special day.
+  </footer>
 </main>
+
 <script>
-function reveal() {
-  document.getElementById("surprise").style.display = "block";
-  document.getElementById("open").style.display = "none";
-  for (let i = 0; i < 24; i++) {
-    const heart = document.createElement("span");
-    heart.className = "heart";
-    heart.textContent = ["❤️","💗","✨","💕"][i % 4];
-    heart.style.left = Math.random() * 95 + "vw";
-    heart.style.animationDelay = Math.random() * 4 + "s";
-    document.body.appendChild(heart);
+  // Personalize the messages here if you want.
+  const messages = [
+    {
+      kn: "ನಿನ್ನ ನಗು ನಿಜವಾಗಿಯೂ ಒಂದು ದಿನವನ್ನು ಸುಂದರವಾಗಿಸಬಲ್ಲದು.",
+      en: "Your smile has a way of making an ordinary day feel brighter."
+    },
+    {
+      kn: "ನಿನ್ನ ಜೀವನದಲ್ಲಿ ನಿನಗೆ ಸಂತೋಷ ಕೊಡುವ ಜನರು ಮತ್ತು ಕ್ಷಣಗಳು ಯಾವಾಗಲೂ ಇರಲಿ.",
+      en: "May your life always be filled with people and moments that bring you happiness."
+    },
+    {
+      kn: "ಎಲ್ಲರಿಗೂ ನಿನ್ನನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೂ, ನೀನು ನಿನ್ನಂತೆಯೇ ಸುಂದರವಾಗಿರುವುದನ್ನು ಮರೆಯಬೇಡ.",
+      en: "Even when not everyone understands you, never forget that being yourself is something beautiful."
+    },
+    {
+      kn: "ನಿನ್ನ ಕನಸುಗಳು ಒಂದೊಂದಾಗಿ ನನಸಾಗಲಿ. ನಿನ್ನ ಮನಸ್ಸಿಗೆ ನೆಮ್ಮದಿ, ನಿನ್ನ ದಿನಗಳಿಗೆ ನಗು ಸಿಗಲಿ.",
+      en: "May your dreams come true one by one, and may your days be full of peace and smiles."
+    }
+  ];
+
+  const $ = id => document.getElementById(id);
+  let currentMessage = 0;
+  let opened = false;
+  let cakeBlown = false;
+
+  function showSection(id) {
+    $(id).classList.remove("hidden");
+    $(id).scrollIntoView({ behavior: "smooth", block: "start" });
   }
-}
+
+  function openLetter() {
+    if (opened) return;
+    opened = true;
+    $("envelope").classList.add("open");
+    $("openBtn").textContent = "ಪತ್ರ ತೆರೆದಿದೆ ✓ · Letter opened";
+    $("openBtn").disabled = true;
+    window.setTimeout(() => {
+      showSection("messagesSection");
+      renderMessage();
+    }, 650);
+  }
+
+  function renderMessage() {
+    const item = messages[currentMessage];
+    $("messageNumber").textContent =
+      "ಮಾತು " + (currentMessage + 1) + " / " + messages.length +
+      " · Message " + (currentMessage + 1) + " of " + messages.length;
+    $("messageKn").textContent = item.kn;
+    $("messageEn").textContent = item.en;
+
+    $("dots").replaceChildren();
+    messages.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.className = "dot" + (i === currentMessage ? " active" : "");
+      $("dots").appendChild(dot);
+    });
+
+    $("messageCard").classList.remove("celebrate");
+    void $("messageCard").offsetWidth;
+    $("messageCard").classList.add("celebrate");
+
+    $("nextBtn").textContent = currentMessage === messages.length - 1
+      ? "ಕೇಕ್ ನೋಡೋಣ 🎂 · See your cake"
+      : "ಮುಂದಿನ ಮಾತು 💗 · Next message";
+  }
+
+  function nextMessage() {
+    if (currentMessage < messages.length - 1) {
+      currentMessage++;
+      renderMessage();
+    } else {
+      showSection("cakeSection");
+    }
+  }
+
+  function blowCake() {
+    if (cakeBlown) {
+      showSection("finalSection");
+      return;
+    }
+    cakeBlown = true;
+    $("cake").classList.add("blown");
+    $("wishText").innerHTML =
+      "ಆಸೆ ಮಾಡಿದ್ದೀಯಾ? ಅದು ನನಸಾಗಲಿ! 💫<br>Wish made? May it come true!";
+    $("blowBtn").textContent = "ಕೊನೆಯ ಸರ್ಪ್ರೈಸ್ ನೋಡಿ 💌 · Final surprise";
+    launchHearts(22);
+  }
+
+  function replay() {
+    currentMessage = 0;
+    opened = false;
+    cakeBlown = false;
+    $("envelope").classList.remove("open");
+    $("openBtn").disabled = false;
+    $("openBtn").textContent = "ಲಕೋಟೆ ತೆರೆ · Open letter";
+    $("cake").classList.remove("blown");
+    $("wishText").innerHTML =
+      "ನಿನ್ನ ಎಲ್ಲಾ ಒಳ್ಳೆಯ ಆಸೆಗಳು ನನಸಾಗಲಿ ✨<br>May your sweetest wishes come true.";
+    $("blowBtn").textContent = "ಮೇಣದಬತ್ತಿ ಆರಿಸು ✨";
+    ["messagesSection", "cakeSection", "finalSection"].forEach(id =>
+      $(id).classList.add("hidden")
+    );
+    $("letterSection").scrollIntoView({ behavior: "smooth" });
+  }
+
+  $("envelope").addEventListener("click", openLetter);
+  $("openBtn").addEventListener("click", openLetter);
+  $("nextBtn").addEventListener("click", nextMessage);
+  $("blowBtn").addEventListener("click", blowCake);
+  $("againBtn").addEventListener("click", replay);
+
+  // Decorative hearts only: no network requests or tracking.
+  const heartSymbols = ["♡", "♥", "💕", "💗", "✧"];
+  function launchHearts(amount = 1) {
+    for (let i = 0; i < amount; i++) {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.fontSize = (13 + Math.random() * 19) + "px";
+      const duration = 7 + Math.random() * 7;
+      heart.style.animationDuration = duration + "s";
+      $("hearts").appendChild(heart);
+      window.setTimeout(() => heart.remove(), duration * 1000);
+    }
+  }
+
+  launchHearts(16);
+  window.setInterval(() => launchHearts(3), 1800);
 </script>
 </body>
 </html>
